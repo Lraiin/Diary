@@ -1,0 +1,12 @@
+[package]
+name = "diary"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# web库
+actix-web = "4"
+actix-cors = "0.7.0"
+actix-files = "0.6"
+# 时间库
+chrono = "0.4.38"

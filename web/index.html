@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import cfg from "./tailwind.config.js";
+        tailwind.config = cfg;
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+    <!-- <P x-data=" { name: getData() }" x-text="name"></p> -->
+    <main class="flex flex-row w-screen h-screen">
+        <!-- Left Sidebar -->
+        <div class="w-20 bg-[#252626ff] border-r border-x-[#807769ff]">
+            <ul class="min-h-screen py-10 flex flex-col justify-center">
+                <li class="flex items-center justify-center" onclick="change_page('editor')">
+                    <ion-icon 
+                        name="pencil-outline"
+                        class="w-8 h-8 px-3 py-3 text-[#807769ff] rounded-lg hover:bg-[#434343]">
+                    </ion-icon>
+                </li>
+                <li class="flex items-center justify-center py-1" onclick="change_page('diarys')">
+                    <ion-icon 
+                        name="cube-outline" 
+                        class="w-8 h-8 px-3 py-3 text-[#807769ff] rounded-lg hover:bg-[#434343]">
+                    </ion-icon>
+                </li>
+                <li class="flex items-center justify-center py-1" onclick="change_page('calendar')">
+                    <ion-icon 
+                        name="calendar-clear-outline" 
+                        class="w-8 h-8 px-3 py-3 text-[#807769ff] rounded-lg hover:bg-[#434343]">
+                    </ion-icon>
+                </li>
+                <li class="flex items-center justify-center" onclick="change_page('profile')">
+                    <ion-icon 
+                        name="person-outline" 
+                        class="w-8 h-8 px-3 py-3 text-[#807769ff] rounded-lg hover:bg-[#434343]">
+                    </ion-icon>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="bg-[#313333ff] w-full h-full">
+            <div class="w-full h-full">
+                <iframe id="content" class="w-full h-full" src="./src/pages/diarys.html"></iframe>
+            </div>
+        </div>
+    </main>
+    <script>
+        let content = document.querySelector("#content");
+        const pages_path = "./src/pages/";
+
+        content.addEventListener('load', function() {
+            this.style.opacity = '3';
+        })
+
+        function change_page(page) {
+            content.src = pages_path + page + ".html";
+        }
+
+        /*
+        async function getData() {
+            let response = await fetch('https://api.github.com/users/Sepalos/repos');
+            if (response.ok) {
+                let data = await response.json();
+
+                // 解析出数据
+                let UserName = data[0].owner.login;
+                console.log(UserName);
+                return UserName;
+            } else {
+                alert("HTTP-Error: " + response.status);
+            }
+        }   
+        */
+    </script>
+    <!-- ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
