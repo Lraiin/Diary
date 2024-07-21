@@ -1,5 +1,5 @@
 use::std::fs::File;
-use std::io::Write;
+use std::{fs, io::Write};
 use chrono::{Datelike, Local};
 use actix_web::{post, HttpResponse, Responder};
 
@@ -10,6 +10,15 @@ async fn save_diary(req_body: String) -> impl Responder {
     let day = Local::now().day();
     let file_name = format!("{}-{}-{}.md", year, month, day);
     let file_path = format!("./diarys/{}/{}/", year, month);
+
+    match fs::metadata(file_path.clone() + &file_name) {
+        Ok(_) => {
+
+        },
+        Err(_) => {
+
+        }
+    }
 
     match File::create(file_path + &file_name) {
         Ok(mut diary) => {
