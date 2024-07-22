@@ -13,8 +13,9 @@ async fn main() -> std::io::Result<()> {
     let local = Local::now();
     let year = local.year();
     let month = local.month();
+    let day = local.day();
     
-    fs::create_dir_all(format!("./diarys/{}/{}", year, month))
+    fs::create_dir_all(format!("./diarys/{}/{}/{}", year, month, day))
         .expect("Failed to create 'diarys' folder");
 
     // 启用服务器
