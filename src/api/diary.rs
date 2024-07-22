@@ -1,7 +1,9 @@
 use::std::fs::File;
 use std::{fs, io::Write};
 use chrono::{Datelike, Local};
-use actix_web::{get, post, HttpResponse, Responder};
+use actix_web::{get, post, web, HttpResponse, Responder};
+
+use serde::Serialize;
 
 
 // 保存日记
@@ -39,8 +41,32 @@ async fn save_diary(req_body: String) -> impl Responder {
 
 }
 
-// 获取日记列表
-#[get("/diary/list")]
-async fn search_diary_list() -> impl Responder {
-    HttpResponse::Ok().body("获取日记列表成功!")
+
+// 获取当天日记
+#[derive(Serialize)]
+struct DiaryInfo {
+    diary_name: String,
+    diary_path: String,
+}
+
+#[get("/diary/list/{year}/{month}/{day}")]
+async fn search_diary_list(path: web::Path<(String, String, String)>) -> impl Responder {
+    let (s_year, s_month, s_day) = path.into_inner();
+
+    // 遍历目录
+    let mut file_list: Vec<DiaryInfo> = Vec::new();
+    if let Ok(diary_dir) = fs::read_dir(format!("./diarys/{}/{}/{}", s_year, s_month, s_day)) {
+        for entry in diary_dir {
+            if let Ok(entry) = entry {
+                if let Some(filename) = entry.file_name().into_string().ok() {
+                    let file_path = entry.path().display().to_string();
+                    file_list.push( DiaryInfo {
+                        diary_name: filename,
+                        diary_path: file_path,
+                    });
+                }
+            }
+        }
+    }
+    HttpResponse::Ok().json(file_list)
 }

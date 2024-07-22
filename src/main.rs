@@ -29,6 +29,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(cors)
             .service(api::diary::save_diary)
+            .service(api::diary::search_diary_list)
             .service(Files::new("/", "./web").index_file("index.html"))
     })
     .bind(("127.0.0.1", 3737))?

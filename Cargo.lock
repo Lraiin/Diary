@@ -484,6 +484,7 @@ dependencies = [
  "actix-files",
  "actix-web",
  "chrono",
+ "serde",
 ]
 
 [[package]]

@@ -14,6 +14,14 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
-    <p class="text-yellow-200">测试文字</p>
+    <div x-data=" { diaries: get_diaries() } ">
+        <template x-for="diary in diaries">
+            <div>
+                <p x-text="diary.diary_name"></p>
+                <p x-text="diary.diary_path"></p>
+            </div>
+        </template>
+    </div>
+    <script src="../js/diaries.js"></script>
 </body>
 </html>
